@@ -1,32 +1,60 @@
 # CustomGlideDataFetcher
 
-with Glide it is possible to plug custom loaders 
+with Glide it is possible to define custom Model Loaders
 
-https://bumptech.github.io/glide/tut/custom-modelloader.html#baseglideurlloader
+## what this repo is about?
 
-## tl;dr
+I bet you usually do 
 
-You usually do 
-
+```
   Glide.with(context)
-        .load("https://baseUrl/very/funny/cat.jpg")
-        .into(imageView)
+  .load("https://baseUrl/very/cute/cat.jpg")
+  .into(imageView)
+```
 
+Sometimes you need to use an external API in order to get your URL for image loader:
 
-Sometimes you have an API which provides you the HTTP request and you have some model wrapping url you need to load with image loader like:
+```
+data class ThumbnailRequest( ... )
 
 data class ThumbnailResponse(val height: Int, val width: Int, val url: String)
-data class ThumnbailRequest( ... )
+
 interface ThumbnailApi{
-    suspend fun getThumbnail(thumnbailRequest: ThumnbailRequest) : ThumbnailResponse
+    suspend fun getThumbnail(request: ThumbnailRequest) : ThumbnailResponse
 }
+```
 
-in this case you can call API first, then use ThumbnailResponse to load url for glide
+in this case you need to call API first, then use `ThumbnailResponse.url` to load image with Glide.
 
-This is not the best solution, we can do it better. 
+This is not the best solution, we can do it better! :rocket: 
 
-This project demonstrates solution to load your ThumnbailRequest directly to glide, without overhead around fetching urls somewhere else:
+This project demonstrates solution to load your `ThumbnailRequest` directly to glide, without overhead around fetching urls somewhere else:
 
-  Glide.with(context)
+```
+Glide.with(context)
         .load( ThumnbailRequest( ... ) )
         .into(imageView)
+```
+
+:tada: :tada: :tada:
+
+This is possible with custom `ModelLoader` 
+
+`https://bumptech.github.io/glide/tut/custom-modelloader.html#writing-a-custom-modelloader`
+
+this requires a lot of boilerplate code, but I got hands dirty and eased this process flexible as possible
+You need to focus on following models:
+```
+typealias ThumbnailUseCase = suspend (ThumbnailRequest) -> ThumbnailResponse //your API 
+typealias RequestType = ThumbnailRequest
+```
+
+behind the scenes following flow of transformations happens:
+```
+(ThumbnailRequest) ==> (ThumbnailResponse) ==> (InputStream == your image)
+```
+
+
+Do not hesitate to leave a :star: if my solution helped you :smiley: 
+
+Enjoy!

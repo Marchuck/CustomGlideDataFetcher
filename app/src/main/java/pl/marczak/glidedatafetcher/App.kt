@@ -2,8 +2,6 @@ package pl.marczak.glidedatafetcher
 
 import android.app.Application
 import kotlinx.coroutines.delay
-import pl.marczak.glidedatafetcher.useCase.ThumbnailResponse
-import pl.marczak.glidedatafetcher.useCase.ThumbnailUseCase
 import java.util.*
 
 class App : Application() {

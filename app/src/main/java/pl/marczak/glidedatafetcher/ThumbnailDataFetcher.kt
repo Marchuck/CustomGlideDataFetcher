@@ -7,7 +7,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import okhttp3.*
-import pl.marczak.glidedatafetcher.useCase.ThumbnailUseCase
 import java.io.IOException
 
 data class ThumbnailDataFetcherException(val failure: Throwable) : Exception()
@@ -67,6 +66,8 @@ class ThumbnailDataFetcher(
         errorConsumer: (Exception) -> Unit
     ) {
         val request = Request.Builder().url(url).build()
+
+        //todo: provide additional authorization if your API requires it
         call = okHttpClient.newCall(request)
         call?.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {

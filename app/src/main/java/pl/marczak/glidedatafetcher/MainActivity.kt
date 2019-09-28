@@ -6,7 +6,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import kotlinx.android.synthetic.main.activity_main.*
-import pl.marczak.glidedatafetcher.useCase.ThumbnailRequest
 
 class MainActivity : AppCompatActivity() {
 

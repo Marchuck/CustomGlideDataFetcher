@@ -1,4 +1,4 @@
-package pl.marczak.glidedatafetcher.useCase
+package pl.marczak.glidedatafetcher
 
 typealias ThumbnailUseCase = suspend (ThumbnailRequest) -> ThumbnailResponse
 

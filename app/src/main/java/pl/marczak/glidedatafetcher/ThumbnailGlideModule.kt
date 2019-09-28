@@ -14,9 +14,6 @@ import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
 import okhttp3.OkHttpClient
-import pl.marczak.glidedatafetcher.useCase.Dimension
-import pl.marczak.glidedatafetcher.useCase.ThumbnailRequest
-import pl.marczak.glidedatafetcher.useCase.ThumbnailUseCase
 import java.io.InputStream
 
 typealias RequestType = ThumbnailRequest
@@ -84,7 +81,11 @@ class GetThumbnailRequestModelLoader(private val factory: ThumbnailDataFetcherFa
         val validWidth = model.dimension?.width ?: width
         val validHeight = model.dimension?.height ?: height
 
-        val request = ThumbnailRequest(model.id, model.type, Dimension(validWidth, validHeight))
+        val request = ThumbnailRequest(
+            model.id,
+            model.type,
+            Dimension(validWidth, validHeight)
+        )
 
         val sourceKey = ObjectKey(request)
 
